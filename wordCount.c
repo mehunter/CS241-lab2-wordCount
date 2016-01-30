@@ -9,7 +9,7 @@
 char c;
 int totalChars  = 0;
 int lineChars   = 0;
-int totalWords  = 1;
+int totalWords  = 0;
 int lineWords   = 0;
 int lineNumber  = 0;
 int mostChars, mostCharsLine = 0;
@@ -34,9 +34,10 @@ int main (void)
       /* If found, then print stuff at end of line, set flag, and count it */
       if (c == RETURN)
         {
-          printf("(%i,%i)%c", lineChars, lineWords, c);
+          printf("(%i,%i)", lineChars, lineWords);
           newLineFlag = TRUE;
           totalChars += lineChars;
+          totalWords += lineWords;
 
           /* Check to see if line is one with most characters */
           if (lineChars >= mostChars) /* Using >= instead of > per spec */
@@ -46,14 +47,29 @@ int main (void)
             }
           
           lineChars = 0; /* reset lineChars because we're moving on to a new line */
+          lineWords = 0; /* likewise reset lineWords */
         }
 
-      /* Since c != return or EOF, just print c and increment counter */
-      else
+      /* Check for whitespace characters */
+      if (c == ' ' || c == '\n' || c == '\t')
         {
-          printf("%c", c);
+          inWordFlag = FALSE;
+        }
+      else if (!inWordFlag)
+        {
+          inWordFlag = TRUE;
+          ++lineWords;
+        }
+
+      /* Print the character, and count it as long as it is not a RETURN */
+      printf("%c", c);
+      if (c != RETURN)
+        {
           ++lineChars;
         }
+          
+      
+      /* Since c != return or EOF, just print c and increment counter */
     }
 
   /* EOF has appeared, so print lines with stats */
