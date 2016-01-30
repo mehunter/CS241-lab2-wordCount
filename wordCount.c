@@ -1,5 +1,9 @@
 /* Matt Hunter */
 
+#define RETURN 0xa
+#define TRUE 1
+#define FALSE 0
+
 #include <stdio.h>
 
 char c;
@@ -10,8 +14,8 @@ int lineWords   = 0;
 int lineNumber  = 0;
 int mostChars, mostCharsLine = 0;
 int mostWords, mostWordsLine = 0;
-int inWordFlag  = 0;
-int newLineFlag = 1;
+int inWordFlag  = FALSE;
+int newLineFlag = TRUE;
 
 int main (void)
 {
@@ -23,15 +27,15 @@ int main (void)
         {
           ++lineNumber;
           printf("%d:", lineNumber);
-          newLineFlag = 0;
+          newLineFlag = FALSE;
         }
 
-      /* Check for 'return' = 0xa, which is not counted as a character */
-      /* If 'return' found, then print stuff at end of line, set flag, and count it */
-      if (c == 0xa)
+      /* Check for 'RETURN', which is not counted as a character */
+      /* If found, then print stuff at end of line, set flag, and count it */
+      if (c == RETURN)
         {
           printf("(%i,%i)%c", lineChars, lineWords, c);
-          newLineFlag = 1;
+          newLineFlag = TRUE;
           totalChars += lineChars;
 
           /* Check to see if line is one with most characters */
