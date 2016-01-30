@@ -13,15 +13,9 @@ int newLineFlag = 1;
 
 int main (void)
 {
-  while (1) /* Read in chars, print, and count until EOF breaks loop*/
-    {
-      c = getchar();
-
-      if (c == EOF) /* Test for end of file stop loop */
-        {
-          break;
-        }
-
+  /* Read in chars, print, and count until EOF*/
+  while ( ( c = getchar() ) != EOF )    {
+     
       if (newLineFlag)
         {
           ++lineNumber;
