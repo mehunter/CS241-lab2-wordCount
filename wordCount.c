@@ -1,6 +1,8 @@
 /* Matt Hunter */
 
-#define RETURN 0xa
+#define RETURN '\n'
+#define TAB '\t'
+#define SPACE ' '
 #define TRUE 1
 #define FALSE 0
 
@@ -31,7 +33,7 @@ int main (void)
         }
 
       /* Check for 'RETURN', which is not counted as a character */
-      /* If found, then print stuff at end of line, set flag, and count it */
+      /* If found, then print stuff at end of line, set flag, keeping track of totals */
       if (c == RETURN)
         {
           printf("(%i,%i)", lineChars, lineWords);
@@ -40,21 +42,31 @@ int main (void)
           totalWords += lineWords;
 
           /* Check to see if line is one with most characters */
-          if (lineChars >= mostChars) /* Using >= instead of > per spec */
+          /* Using >= instead of > to capture latest line in event of a tie, per spec */
+          if (lineChars >= mostChars) 
             {
               mostChars = lineChars;
               mostCharsLine = lineNumber;
             }
+
+          /* Check to see if line is one with most words */
+          if (lineWords >= mostWords)
+            {
+              mostWords = lineWords;
+              mostWordsLine = lineNumber;
+            }
           
-          lineChars = 0; /* reset lineChars because we're moving on to a new line */
-          lineWords = 0; /* likewise reset lineWords */
+          lineChars = lineWords = 0; /* reset because we're moving on to a new line */
         }
 
-      /* Check for whitespace characters */
-      if (c == ' ' || c == '\n' || c == '\t')
+      /* Check c to see if it is one of the whitespace characters */
+      /* indicating we're outside of any word */
+      if (c == SPACE || c == RETURN || c == TAB)
         {
           inWordFlag = FALSE;
         }
+
+      /* If it's not a whitespace character, we must have started a new word */
       else if (!inWordFlag)
         {
           inWordFlag = TRUE;
@@ -67,9 +79,6 @@ int main (void)
         {
           ++lineChars;
         }
-          
-      
-      /* Since c != return or EOF, just print c and increment counter */
     }
 
   /* EOF has appeared, so print lines with stats */
