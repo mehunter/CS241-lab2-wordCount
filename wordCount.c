@@ -9,7 +9,7 @@
 char c;
 int totalChars  = 0;
 int lineChars   = 0;
-int totalWords  = 0;
+int totalWords  = 1;
 int lineWords   = 0;
 int lineNumber  = 0;
 int mostChars, mostCharsLine = 0;
