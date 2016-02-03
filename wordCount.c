@@ -8,23 +8,24 @@
 
 #include <stdio.h>
 
-char c;
-int totalChars  = 0;
-int lineChars   = 0;
-int totalWords  = 0;
-int lineWords   = 0;
-int lineNumber  = 0;
-int mostChars, mostCharsLine = 0;
-int mostWords, mostWordsLine = 0;
-int inWordFlag  = FALSE;
-int newLineFlag = TRUE;
-
 int main (void)
 {
+  int c;
+  int totalChars  = 0;
+  int lineChars   = 0;
+  int totalWords  = 0;
+  int lineWords   = 0;
+  int lineNumber  = 0;
+  int mostChars, mostCharsLine = 0;
+  int mostWords, mostWordsLine = 0;
+  int inWordFlag  = FALSE;
+  int newLineFlag = TRUE;
+
+
   /* Read in chars, print, and count until EOF*/
   while ( ( c = getchar() ) != EOF )
     {
-      /* If we're at a new line, print the line number, then set flag to false */
+      /* If we're at a new line, print line number, then set flag to false */
       if (newLineFlag)
         {
           ++lineNumber;
@@ -33,7 +34,8 @@ int main (void)
         }
 
       /* Check for 'RETURN', which is not counted as a character */
-      /* If found, then print stuff at end of line, set flag, keeping track of totals */
+      /* If found, then print stuff at end of line, set flag, keeping 
+         track of totals */
       if (c == RETURN)
         {
           printf("(%i,%i)", lineChars, lineWords);
@@ -41,8 +43,9 @@ int main (void)
           totalChars += lineChars;
           totalWords += lineWords;
 
-          /* Check to see if line is one with most characters */
-          /* Using >= instead of > to capture latest line in event of a tie, per spec */
+          /* Check to see if line is one with most characters 
+             using >= instead of > to capture latest line in event of a 
+             tie, per lab spec */
           if (lineChars >= mostChars) 
             {
               mostChars = lineChars;
@@ -56,7 +59,8 @@ int main (void)
               mostWordsLine = lineNumber;
             }
           
-          lineChars = lineWords = 0; /* reset because we're moving on to a new line */
+          lineChars = lineWords = 0; /* reset because we're moving 
+                                        on to a new line */
         }
 
       /* Check c to see if it is one of the whitespace characters */
@@ -82,7 +86,8 @@ int main (void)
     }
 
   /* EOF has appeared, so print lines with stats */
-  printf("%i lines, %i words, %i characters\n", lineNumber, totalWords, totalChars);
+  printf("%i lines, %i words, %i characters\n",
+         lineNumber, totalWords, totalChars);
   printf("Line %i has the most characters with %i\n", mostCharsLine, mostChars);
   printf("Line %i has the most words with %i\n", mostWordsLine, mostWords);
 
